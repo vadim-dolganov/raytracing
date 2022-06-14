@@ -40,8 +40,16 @@ int main()
 	scene.ambient_color = glm::vec3{ 0.025, 0.025, 0.025 };
 
 	// lights
-
-	//scene.lights_direct.push_back(SceneManager::create_light_direct({ 3, -1, 1 }, { 1, 1, 1 }, 1.5));
+    scene.lights_point.push_back(SceneManager::create_light_point({ 3, 4, 0, 0.1 }, { 1, 1, 1 }, 1.5));
+	// blue sphere
+	scene.spheres.push_back(SceneManager::create_sphere({ 2, 0, 6 }, 1,
+		SceneManager::create_material({ 0, 0, 1 }, 50, 0.35)));
+	// red sphere
+	scene.spheres.push_back(SceneManager::create_sphere({ -1, 0, 6 }, 1,
+		SceneManager::create_material({ 1, 0, 0 }, 100, 0.1), true));
+	// transparent sphere
+	scene.spheres.push_back(SceneManager::create_sphere({ 0.5, 2, 6 }, 1,
+		SceneManager::create_material({ 1, 1, 1 }, 200, 0.1, 1.125, { 1, 0, 2 }, 1)));
 
 	// jupiter
 	rt_sphere jupiter = SceneManager::create_sphere({}, 5000,
@@ -85,9 +93,27 @@ int main()
 		update::saturn_rings = scene.rings.size() - 1;
 	}
 
+	rt_material coneMaterial = SceneManager::create_material({ 234 / 255.0f, 17 / 255.0f, 82 / 255.0f }, 200, 0.1);
+	rt_surface cone = SurfaceFactory::GetEllipticCone(1 / 3.5f, 1 / 3.5f, 1, coneMaterial);
+	cone.pos = { -5, 4, 6 };
+	cone.quat_rotation = glm::quat(glm::vec3(glm::radians(90.f), 0, 0));
+	cone.yMin = -1;
+	cone.yMax = 4;
+	scene.surfaces.push_back(cone);
+
 	// floor
-	//scene.boxes.push_back(SceneManager::create_box({ 0, -1.2, 6 }, { 22, 0.2, 22 },
-	//	SceneManager::create_material({ 1, 0.6, 0 }, 00, 0.05)));
+	scene.boxes.push_back(SceneManager::create_box({ -12, 2.4, 6 }, { 0.2, 4, 12 },
+    		SceneManager::create_material({ 1, 0.6, 0 }, 00, 0.0)));
+	scene.boxes.push_back(SceneManager::create_box({ 12, 2.4, 6 }, { 0.2, 4, 12 },
+    		SceneManager::create_material({ 1, 0.6, 0 }, 00, 0.1)));
+	scene.boxes.push_back(SceneManager::create_box({ 0, 2.4, 18 }, { 12, 4, 0.2 },
+    		SceneManager::create_material({ 1, 0.6, 0 }, 00, 0.0)));
+	scene.boxes.push_back(SceneManager::create_box({ 0, 2.4, -6 }, { 12, 4, 0.2 },
+    		SceneManager::create_material({ 1, 0.6, 0 }, 00, 0.0)));
+	scene.boxes.push_back(SceneManager::create_box({ 0, -1.2, 6 }, { 12, 0.2, 12 },
+    		SceneManager::create_material({ 1, 0.6, 0 }, 00, 0.0)));
+    scene.boxes.push_back(SceneManager::create_box({ 0, 6, 6 }, { 12, 0.2, 12 },
+    		SceneManager::create_material({ 1, 0.6, 0 }, 00, 0.1)));
 
 	rt_defines defines = scene.get_defines();
 	glWrapper.init_shaders(defines);

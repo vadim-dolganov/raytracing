@@ -19,9 +19,7 @@ const glm::quat saturn_pitch = glm::quat(glm::vec3(glm::radians(15.f), 0, 0));
 
 int main()
 {
-	//GLWrapper glWrapper(1280, 720, false);
-
-	GLWrapper glWrapper(true);
+	GLWrapper glWrapper(1280, 720, false);
 
 	glWrapper.init_window();
 
@@ -39,8 +37,6 @@ int main()
 	scene.shadow_ambient = glm::vec3{ 0.1, 0.1, 0.1 };
 	scene.ambient_color = glm::vec3{ 0.025, 0.025, 0.025 };
 
-	// lights
-    scene.lights_point.push_back(SceneManager::create_light_point({ 3, 4, 0, 0.1 }, { 1, 1, 1 }, 1.5));
 	// blue sphere
 	scene.spheres.push_back(SceneManager::create_sphere({ 2, 0, 6 }, 1,
 		SceneManager::create_material({ 0, 0, 1 }, 50, 0.35)));
@@ -74,15 +70,8 @@ int main()
 	scene.spheres.push_back(mars);
 	update::mars = scene.spheres.size() - 1;
 
-	// sun
-	const int sunRadius = 10000;
-	glm::vec3 center = { sunRadius * 20, 0, 0 };
-	rt_sphere sun = SceneManager::create_sphere(center, sunRadius,
-		SceneManager::create_material({}, 10, 0.0f));
-	sun.textureNum = 6;
-	//scene.spheres.push_back(sun);
-	scene.lights_point.push_back(SceneManager::create_light_point({ center.x+ sunRadius*2, center.y, center.z, sunRadius + 10 }, { 1, 1, 1 }, 1.5));
-
+	scene.lights_direct.push_back(SceneManager::create_light_direct({ 3, -1, 1 }, { 1, 1, 1 }, 1.5));
+    scene.lights_point.push_back(SceneManager::create_light_point({ 3, 4, 0, 0.1 }, { 1, 1, 1 }, 1.5));
 	// ring
 	{
 		rt_ring ring = SceneManager::create_ring({}, saturnRadius * 1.1166, saturnRadius * 2.35,
@@ -211,7 +200,7 @@ void update_scene(scene_container& scene, float deltaTime, float time)
 		rt_sphere* mars = &scene.spheres[update::mars];
 		const float marsSpeed = 0.05;
 		mars->obj.x = cos(time * marsSpeed + 0.5f) * 10000 / 10;
-		mars->obj.z = sin(time * marsSpeed + 0.5f) * 10000 / 10;
+		mars->obj.z = sin(time * marsSpeed + 0.5f) * 11000 ;
 		mars->obj.y = -cos(time * marsSpeed) * 3000 / 5;
 		mars->quat_rotation *= glm::angleAxis(deltaTime / 10, glm::vec3(0, 1, 0));
 	}

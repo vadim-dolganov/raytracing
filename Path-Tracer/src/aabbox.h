@@ -16,7 +16,6 @@ struct AABBox {
         bl=bl_, tr=tr_;
     }
 
-    // Expand to fit box
     void expand(const AABBox &box) {
         if (box.bl.x < bl.x) bl.x = box.bl.x ;
         if (box.bl.y < bl.y) bl.y = box.bl.y;
@@ -27,14 +26,13 @@ struct AABBox {
         if (box.tr.z > tr.z) tr.z = box.tr.z ;
     }
 
-    // Expand to fit point
     void expand(const Vec &vec) {
         if (vec.x < bl.x) bl.x = vec.x ;
         if (vec.y < bl.y) bl.y = vec.y;
         if (vec.z < bl.z) bl.z = vec.z;
     }
 
-    // Returns longest axis: 0, 1, 2 for x, y, z respectively
+    // Возвращает самую длинную ось: 0, 1, 2 для x, y, z соответственно
     int get_longest_axis() {
         Vec diff = tr - bl;
         if (diff.x > diff.y && diff.x > diff.z) return 0;
@@ -42,7 +40,7 @@ struct AABBox {
         return 2;
     }
 
-    // Check if ray intersects with box. Returns true/false and stores distance in t
+    // Проверяем, пересекается ли луч с прямоугольником. Возвращает true/false и сохраняет расстояние в t
     bool intersection(const Ray &r, double &t) {
         double tx1 = (bl.x - r.origin.x)*r.direction_inv.x;
         double tx2 = (tr.x - r.origin.x)*r.direction_inv.x;

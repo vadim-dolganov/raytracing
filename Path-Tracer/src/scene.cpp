@@ -26,12 +26,6 @@ Vec Scene::trace_ray(const Ray &ray, int depth, unsigned short*Xi) {
 
     // If no hit, return world colour
     if (!isct.hit) return Vec();
-    /*if (!isct.hit){
-        double u, v;
-        v = (acos(Vec(0,0,1).dot(ray.direction))/M_PI);
-        u = (acos(ray.direction.y)/ M_PI);
-        return bg.get_pixel(fabs(u), fabs(v))*1.2;
-    }*/
 
     if (isct.m.get_type() == EMIT) return isct.m.get_emission();
     //Vec x = ray.origin + ray.direction * isct.u;

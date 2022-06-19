@@ -7,13 +7,12 @@
 #include "kdtree.h"
 #include "material.h"
 #include "../lib/tiny_obj_loader/tiny_obj_loader.h"
-//#include "../lib/fastbvh/BVH.h"
 
 struct ObjectIntersection {
-	bool hit;	// If there was an intersection
-	double u;	// Distance to intersection along ray
-	Vec n;		// Normal of intersected face
-	Material m;	// Material of intersected face
+	bool hit;	// было ли пересечение луча
+	double u;	// Расстояние до пересечения луча
+	Vec n;		// Нормаль пересекаемой грани
+	Material m;	// Материал пересекаемой грани
 
 	ObjectIntersection(bool hit_=false, double u_=0, Vec n_=Vec(), Material m_=Material());
 };
@@ -51,7 +50,6 @@ private:
     std::vector<Triangle*> tris;
     Material m_m;	// Material
     KDNode *node;
-	//BVH bvh;
 
 public:
 	Mesh(Vec p_, const char* file_path, Material m_);

@@ -20,7 +20,7 @@ struct Triangle {
         m=m_;
     }
 
-    // Returns axis aligned bounding box that contains the triangle
+    // Возвращает выровненную по оси ограничивающую рамку, содержащую треугольник
     AABBox get_bounding_box(){
         Vec bl = Vec(
                 std::min (std::min(v0.x, v1.x), v2.x ) ,
@@ -36,12 +36,12 @@ struct Triangle {
         return AABBox(bl, tr);
     }
 
-    // Returns the midpoint of the triangle
+    // Возвращает середину треугольника
     Vec get_midpoint(){
         return (v0 + v1 + v2)/3;
     }
 
-    // Checks if ray intersects with triangle. Returns true/false.
+    // Проверяет, пересекается ли луч с треугольником. Возвращает истину/ложь.
     bool intersect(Ray ray, double &t, double tmin, Vec &norm) const {
 
         double u, v, t_temp=0;

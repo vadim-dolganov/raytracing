@@ -1,6 +1,11 @@
 #include <math.h>
 #include <iostream>
 #include <stdio.h>
+#include <vector>
+#include <iomanip>
+#include <chrono>
+#include <ctime>
+
 
 #include "vector.h"
 #include "ray.h"
@@ -8,6 +13,7 @@
 #include "objects.h"
 //#include "../lib/fastbvh/BVH.h"
 
+using namespace std;
 
 ObjectIntersection::ObjectIntersection(bool hit_, double u_, Vec n_, Material m_)
 {
@@ -64,21 +70,6 @@ Mesh::Mesh(Vec p_, const char* file_path, Material m_) {
     shapes_size = m_shapes.size();
     materials_size = m_materials.size();
 
-    // Load materials/textures from obj
-    // TODO: Only texture is loaded at the moment, need to implement material types and colours
-    for (int i=0; i<materials_size; i++) {
-        std::string texture_path = "";
-
-        if (!m_materials[i].diffuse_texname.empty()){
-            if (m_materials[i].diffuse_texname[0] == '/') texture_path = m_materials[i].diffuse_texname;
-            texture_path = mtlbasepath + m_materials[i].diffuse_texname;
-            materials.push_back( Material(DIFF, Vec(1,1,1), Vec(), texture_path.c_str()) );
-        }
-        else {
-            materials.push_back( Material(DIFF, Vec(1,1,1), Vec()) );
-        }
-
-    }
 
     // Load triangles from obj
     for (int i = 0; i < shapes_size; i++) {
@@ -142,7 +133,15 @@ Mesh::Mesh(Vec p_, const char* file_path, Material m_) {
     // Clean up
     m_shapes.clear();
     m_materials.clear();
+    auto start = chrono::system_clock::now();
     node = KDNode().build(tris, 0);
+    auto end = chrono::system_clock::now();
+            chrono::duration<double> elapsed_seconds = end - start;
+            time_t end_time = chrono::system_clock::to_time_t(end);
+
+            std::cout << "finished computation at " << std::ctime(&end_time)
+                      << "elapsed time: " << elapsed_seconds.count() << "s\n";
+
     printf("\n");
 	//bvh = BVH(&tris);
 }

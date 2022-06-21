@@ -12,7 +12,7 @@ Material::Material(MaterialType t, Vec c, Vec e, Texture tex) {
 MaterialType Material::get_type() const { return m_type; }
 Vec Material::get_colour() const { return m_colour; }
 
-Vec Material::get_colour_at(double u, double v) const {
+Vec Material::getColourAt(double u, double v) const {
     if (m_texture.is_loaded())
         return m_texture.get_pixel(u, v);
 

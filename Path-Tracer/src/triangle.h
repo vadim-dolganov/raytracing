@@ -21,7 +21,7 @@ struct Triangle {
     }
 
     // Возвращает выровненную по оси ограничивающую рамку, содержащую треугольник
-    AABBox get_bounding_box(){
+    AABBox getBoundingBox(){
         Vec bl = Vec(
                 std::min (std::min(v0.x, v1.x), v2.x ) ,
                 std::min (std::min(v0.y, v1.y), v2.y ) ,
@@ -37,7 +37,7 @@ struct Triangle {
     }
 
     // Возвращает середину треугольника
-    Vec get_midpoint(){
+    Vec getMidpoint(){
         return (v0 + v1 + v2)/3;
     }
 
@@ -81,7 +81,7 @@ struct Triangle {
         return Vec(u, v, w);
     }
 
-    Vec get_colour_at(Vec p){
+    Vec getColourAt(Vec p){
         if(m==NULL) return Vec(1,0,1);
 
         Vec b = barycentric(p);
@@ -90,7 +90,7 @@ struct Triangle {
         c = c + (t1 * b.y);
         c = c + (t2 * b.z);
 
-        return m->get_colour_at(c.x, c.y);
+        return m->getColourAt(c.x, c.y);
     }
 
 };

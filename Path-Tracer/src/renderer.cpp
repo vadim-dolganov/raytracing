@@ -26,8 +26,7 @@ void Renderer::render(int samples) {
     for (int y=0; y<height; y++){
         unsigned short Xi[3]={0,0,y*y*y};
 
-        fprintf(stderr, "\rRendering (%i samples): %.2f%% ",
-                samples, (double)y/height*100);
+        fprintf(stderr, "\rRendering: %.2f%% ", (double)y/height*100);
 
         for (int x=0; x<width; x++){
             Vec col = Vec();

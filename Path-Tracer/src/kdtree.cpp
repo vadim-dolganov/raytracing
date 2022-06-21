@@ -15,13 +15,13 @@ KDNode* KDNode::build(std::vector<Triangle*> &tris, int depth){
 
     if (tris.size() == 0) return node;
 
-    node->box = tris[0]->get_bounding_box();
+    node->box = tris[0]->getBoundingBox();
     Vec midpt = Vec();
     double tris_recp = 1.0/tris.size();
 
     for (long i=1; i<tris.size(); i++) {
-        node->box.expand(tris[i]->get_bounding_box());
-        midpt = midpt + (tris[i]->get_midpoint() * tris_recp);
+        node->box.expand(tris[i]->getBoundingBox());
+        midpt = midpt + (tris[i]->getMidpoint() * tris_recp);
     }
 
     std::vector<Triangle*> left_tris;
@@ -31,13 +31,13 @@ KDNode* KDNode::build(std::vector<Triangle*> &tris, int depth){
     for (long i=0; i<tris.size(); i++) {
         switch (axis) {
             case 0:
-                midpt.x >= tris[i]->get_midpoint().x ? right_tris.push_back(tris[i]) : left_tris.push_back(tris[i]);
+                midpt.x >= tris[i]->getMidpoint().x ? right_tris.push_back(tris[i]) : left_tris.push_back(tris[i]);
                 break;
             case 1:
-                midpt.y >= tris[i]->get_midpoint().y ? right_tris.push_back(tris[i]) : left_tris.push_back(tris[i]);
+                midpt.y >= tris[i]->getMidpoint().y ? right_tris.push_back(tris[i]) : left_tris.push_back(tris[i]);
                 break;
             case 2:
-                midpt.z >= tris[i]->get_midpoint().z ? right_tris.push_back(tris[i]) : left_tris.push_back(tris[i]);
+                midpt.z >= tris[i]->getMidpoint().z ? right_tris.push_back(tris[i]) : left_tris.push_back(tris[i]);
                 break;
         }
     }
@@ -45,10 +45,10 @@ KDNode* KDNode::build(std::vector<Triangle*> &tris, int depth){
     if (tris.size() == left_tris.size() || tris.size() == right_tris.size()) {
         node->triangles = tris;
         node->leaf = true;
-        node->box = tris[0]->get_bounding_box();
+        node->box = tris[0]->getBoundingBox();
 
         for (long i=1; i<tris.size(); i++) {
-            node->box.expand(tris[i]->get_bounding_box());
+            node->box.expand(tris[i]->getBoundingBox());
         }
 
         node->left = new KDNode();
@@ -96,7 +96,7 @@ bool KDNode::hit(KDNode *node, const Ray &ray, double &t, double &tmin, Vec &nor
             }
             if (hit_tri) {
                 Vec p = ray.origin + ray.direction * tmin;
-                c = node->triangles[tri_idx]->get_colour_at(p);
+                c = node->triangles[tri_idx]->getColourAt(p);
                 return true;
             }
         }

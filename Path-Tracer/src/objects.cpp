@@ -134,7 +134,7 @@ Mesh::Mesh(Vec p_, const char* file_path, Material m_) {
             chrono::duration<double> elapsed_seconds = end - start;
             time_t end_time = chrono::system_clock::to_time_t(end);
 
-            std::cout << "finished computation at " << std::ctime(&end_time)
+            std::cout << "kd tree build finished " << std::ctime(&end_time)
                       << "elapsed time: " << elapsed_seconds.count() << "s\n";
 
     printf("\n");

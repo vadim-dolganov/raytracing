@@ -28,9 +28,7 @@ Sphere::Sphere( Vec p_, double r_, Material m_ ) {
 double Sphere::get_radius() { return m_r; }
 Material Sphere::get_material() { return m_m; }
 
-// Check if ray intersects with sphere. Returns ObjectIntersection data structure
 ObjectIntersection Sphere::get_intersection(const Ray &ray) {
-	// Solve t^2*d.d + 2*t*(o-p).d + (o-p).(o-p)-R^2 = 0
 	bool hit = false;
 	double distance = 0;
 	Vec n = Vec();
@@ -71,12 +69,10 @@ Mesh::Mesh(Vec p_, const char* file_path, Material m_) {
     materials_size = m_materials.size();
 
 
-    // Load triangles from obj
     for (int i = 0; i < shapes_size; i++) {
         indices_size = m_shapes[i].mesh.indices.size() / 3;
         for (size_t f = 0; f < indices_size; f++) {
 
-            // Triangle vertex coordinates
             Vec v0_ = Vec(
                     m_shapes[i].mesh.positions[ m_shapes[i].mesh.indices[3*f] * 3     ],
                     m_shapes[i].mesh.positions[ m_shapes[i].mesh.indices[3*f] * 3 + 1 ],
@@ -97,7 +93,6 @@ Mesh::Mesh(Vec p_, const char* file_path, Material m_) {
 
             Vec t0_, t1_, t2_;
 
-            //Attempt to load triangle texture coordinates
             if (m_shapes[i].mesh.indices[3 * f + 2] * 2 + 1 < m_shapes[i].mesh.texcoords.size()) {
                 t0_ = Vec(
                         m_shapes[i].mesh.texcoords[m_shapes[i].mesh.indices[3 * f] * 2],
@@ -146,13 +141,11 @@ Mesh::Mesh(Vec p_, const char* file_path, Material m_) {
 	//bvh = BVH(&tris);
 }
 
-// Check if ray intersects with mesh. Returns ObjectIntersection data structure
 ObjectIntersection Mesh::get_intersection(const Ray &ray) {
     double t=0, tmin=INFINITY;
     Vec normal = Vec();
     Vec colour = Vec();
     bool hit = node->hit(node, ray, t, tmin, normal, colour);
-    //bool hit = bvh.getIntersection(ray, t, tmin, normal);
     return ObjectIntersection(hit, tmin, normal, Material(DIFF, colour, Vec()));
 
 }

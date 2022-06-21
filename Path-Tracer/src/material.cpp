@@ -12,7 +12,6 @@ Material::Material(MaterialType t, Vec c, Vec e, Texture tex) {
 MaterialType Material::get_type() const { return m_type; }
 Vec Material::get_colour() const { return m_colour; }
 
-// Get colour at UV coordinates u,v
 Vec Material::get_colour_at(double u, double v) const {
     if (m_texture.is_loaded())
         return m_texture.get_pixel(u, v);
@@ -22,7 +21,6 @@ Vec Material::get_colour_at(double u, double v) const {
 Vec Material::get_emission() const { return m_emission; }
 
 Ray Material::get_reflected_ray(const Ray &r, Vec &p, const Vec &n,	unsigned short *Xi) const {
-	// Ideal specular reflection
 	if (m_type == SPEC) {
         double roughness = 0.8;
         Vec reflected = r.direction - n * 2 * n.dot(r.direction);
@@ -33,9 +31,7 @@ Ray Material::get_reflected_ray(const Ray &r, Vec &p, const Vec &n,	unsigned sho
         ).norm();
 
         return Ray(p, reflected);
-		//return Ray(p, r.direction - n * 2 * n.dot(r.direction));
 	}
-	// Ideal diffuse reflection
 	if (m_type == DIFF) {
 		Vec nl=n.dot(r.direction)<0?n:n*-1;
 		double r1=2*M_PI*erand48(Xi), r2=erand48(Xi), r2s=sqrt(r2);

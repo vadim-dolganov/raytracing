@@ -47,7 +47,6 @@ int main(int argc, char *argv[]) {
     renderer.render(samples);                       // Render image to pixel buffer
     renderer.save_image("render.png");              // Save image
 
-    // Print duration information
     time(&stop);
     double diff = difftime(stop, start);
     int hrs = (int)diff/3600;

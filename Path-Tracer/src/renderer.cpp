@@ -22,12 +22,12 @@ void Renderer::render(int samples) {
     double samples_recp = 1./samples;
 
     // Main Loop
-    #pragma omp parallel for schedule(dynamic, 1)       // OpenMP
+    #pragma omp parallel for schedule(dynamic, 1)
     for (int y=0; y<height; y++){
-        unsigned short Xi[3]={0,0,y*y*y};               // Stores seed for erand48
+        unsigned short Xi[3]={0,0,y*y*y};
 
-        fprintf(stderr, "\rRendering (%i samples): %.2f%% ",      // Prints
-                samples, (double)y/height*100);                   // progress
+        fprintf(stderr, "\rRendering (%i samples): %.2f%% ",
+                samples, (double)y/height*100);
 
         for (int x=0; x<width; x++){
             Vec col = Vec();
@@ -57,9 +57,8 @@ void Renderer::save_image(const char *file_path) {
         pixel_buffer.push_back(255);
     }
 
-    //Encode the image
     unsigned error = lodepng::encode(file_path, pixel_buffer, width, height);
-    //if there's an error, display it
+
     if(error) std::cout << "encoder error " << error << ": "<< lodepng_error_text(error) << std::endl;
 
     pixel_buffer.clear();

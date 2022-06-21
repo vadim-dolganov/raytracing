@@ -1,20 +1,7 @@
-/*
-*  Simple monte carlo path tracer in C++
-*
-*  Compilation:
-*      $ mkdir build
-*      $ cd build
-*      $ cmake ..
-*      $ make
-*
-*  Usage:
-*      $ ./pathtracer <number of samples>
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "time.h"
-
+#include <string>
 #include "vector.h"
 #include "material.h"
 #include "objects.h"
@@ -22,6 +9,7 @@
 #include "scene.h"
 #include "renderer.h"
 
+std::string OBJ_FILE_PATH = "../obj/star-wars.obj";
 
 int main(int argc, char *argv[]) {
 
@@ -31,16 +19,15 @@ int main(int argc, char *argv[]) {
 
     if (argc == 2) samples = atoi(argv[1]);
 
-    Camera camera = Camera(Vec(0, -5, 2.5), Vec(0,0,1), 1280, 720);
+    Camera camera = Camera(Vec(0, -3, 2.5), Vec(0,0,1), 1280, 720);
     Scene scene = Scene();
 
-    // Add objects to scene
-    scene.add( dynamic_cast<Object*>(new Sphere(Vec(0,0,-1000), 1000, Material())) );
-    scene.add( dynamic_cast<Object*>(new Sphere(Vec(-1004,0,0), 1000, Material(DIFF, Vec(0.85,0.4,0.4)))) );
-    scene.add( dynamic_cast<Object*>(new Sphere(Vec(1004,0,0), 1000, Material(DIFF, Vec(0.4,0.4,0.85)))) );
-    scene.add( dynamic_cast<Object*>(new Sphere(Vec(0,1006,0), 1000, Material())) );
-    scene.add( dynamic_cast<Object*>(new Sphere(Vec(0,0,110), 100, Material(EMIT, Vec(1,1,1), Vec(2.2,2.2,2.2)))) );
-    scene.add( dynamic_cast<Object*>(new Mesh(Vec(), "../obj/star-wars.obj", Material(EMIT, Vec(0.9, 0.9, 0.9)))) );
+    scene.add( dynamic_cast<Object*>(new Sphere(Vec(0,0,-1000), 1000, Material(DIFF, Vec(0.85,0.4,0.4)))) );
+    scene.add( dynamic_cast<Object*>(new Sphere(Vec(-1004,0,0), 1000, Material(DIFF, Vec(0,0,0)))) );
+    scene.add( dynamic_cast<Object*>(new Sphere(Vec(1004,0,0), 1000, Material(DIFF, Vec(0,0,0)))) );
+    scene.add( dynamic_cast<Object*>(new Sphere(Vec(0,1006,0), 1000, Material(DIFF, Vec(0.85,0.4,0.4)))) );
+    scene.add( dynamic_cast<Object*>(new Sphere(Vec(0,0,110), 100, Material(EMIT, Vec(0,0,0), Vec(2.2,2.2,2.2)))) );
+    scene.add( dynamic_cast<Object*>(new Mesh(Vec(), OBJ_FILE_PATH, Material(EMIT, Vec(0.9, 0.9, 0.9)))) );
 
 
     Renderer renderer = Renderer(&scene, &camera);

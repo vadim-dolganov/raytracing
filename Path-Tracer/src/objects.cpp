@@ -45,18 +45,17 @@ ObjectIntersection Sphere::get_intersection(const Ray &ray) {
 }
 
 
-Mesh::Mesh(Vec p_, const char* file_path, Material m_) {
+Mesh::Mesh(Vec p_, std::string file_path, Material m_) {
 
 	m_p=p_, m_m=m_;
 
     std::string mtlbasepath;
-    std::string inputfile = file_path;
-    unsigned long pos = inputfile.find_last_of("/");
-    mtlbasepath = inputfile.substr(0, pos+1);
+    unsigned long pos = file_path.find_last_of("/");
+    mtlbasepath = file_path.substr(0, pos+1);
 
-    printf("Loading %s...\n", file_path);
+    std::cout << "Loading " << file_path << "...\n";
     // Attempt to load mesh
-	std::string err = tinyobj::LoadObj(m_shapes, m_materials, inputfile.c_str(), mtlbasepath.c_str());
+	std::string err = tinyobj::LoadObj(m_shapes, m_materials, file_path.c_str(), mtlbasepath.c_str());
 
 	if (!err.empty()) {
 		std::cerr << err << std::endl;

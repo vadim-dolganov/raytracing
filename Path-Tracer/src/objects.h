@@ -52,7 +52,7 @@ private:
     KDNode *node;
 
 public:
-	Mesh(Vec p_, const char* file_path, Material m_);
+	Mesh(Vec p_, std::string file_path, Material m_);
 	virtual ObjectIntersection get_intersection(const Ray &r);
 
 };

@@ -20,7 +20,6 @@ struct Triangle {
         m=m_;
     }
 
-    // Возвращает выровненную по оси ограничивающую рамку, содержащую треугольник
     AABBox getBoundingBox(){
         Vec bl = Vec(
                 std::min (std::min(v0.x, v1.x), v2.x ) ,

@@ -13,5 +13,3 @@ cmake --build .
 
 Готовая либа SMAA для сглаживания пикселей
 https://github.com/Asmodean-/SMAA-OpenGL/tree/master/smaa-opengl-master
-
-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

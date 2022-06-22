@@ -18,7 +18,6 @@ set(SOURCE_FILES
     src/material.cpp
     src/objects.cpp
     src/kdtree.cpp
-    src/texture.cpp
     src/camera.cpp
     src/scene.cpp
     src/renderer.cpp

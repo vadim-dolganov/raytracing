@@ -30,9 +30,9 @@ int main(int argc, char *argv[]) {
     scene.add( dynamic_cast<Object*>(new Mesh(Vec(), OBJ_FILE_PATH, Material(EMIT, Vec(0.9, 0.9, 0.9)))) );
 
 
-    Renderer renderer = Renderer(&scene, &camera);
+    /*Renderer renderer = Renderer(&scene, &camera);
     renderer.render(samples);
-    renderer.save_image("render.png");
+    renderer.save_image("render.png");*/
 
     time(&stop);
     double diff = difftime(stop, start);

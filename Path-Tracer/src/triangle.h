@@ -21,18 +21,18 @@ struct Triangle {
     }
 
     AABBox getBoundingBox(){
-        Vec bl = Vec(
+        Vec bottomLeft = Vec(
                 std::min (std::min(v0.x, v1.x), v2.x ) ,
                 std::min (std::min(v0.y, v1.y), v2.y ) ,
                 std::min (std::min(v0.z, v1.z), v2.z )
         );
-        Vec tr = Vec(
+        Vec topRight = Vec(
                 std::max (std::max(v0.x, v1.x), v2.x ) ,
                 std::max (std::max(v0.y, v1.y), v2.y ) ,
                 std::max (std::max(v0.z, v1.z), v2.z )
         );
 
-        return AABBox(bl, tr);
+        return AABBox(bottomLeft, topRight);
     }
 
     // Возвращает середину треугольника
